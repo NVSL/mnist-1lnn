@@ -86,34 +86,3 @@ void initLayer(Layer *l);
 int getLayerPrediction(Layer *l);
 
 
-
-
-/**
- * @brief Sets a cell's input according to the pixels of a given MNIST image
- * @param c A pointer to a cell
- * @param img A pointer to an MNIST image
- */
-
-void setCellInput(Cell *c, MNIST_Image *img);
-
-
-
-
-/**
- * @brief Calculates a cell's output by suming all input-weight-products
- * @param c A cell of a NN layer
- */
-
-void calcCellOutput(Cell *c);
-
-
-/**
- * @brief Performs the testing of the trained network
- * @param c Pointer to the cell that is to be trained
- * @param img Pointer to the image that is to be processed
- * @param target Desired output value
- */
-
-
-void testCell(Cell *c, MNIST_Image *img, int target);
-

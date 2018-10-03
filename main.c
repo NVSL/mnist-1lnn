@@ -33,11 +33,6 @@
 #include "1lnn.h"
 
 
-
-
-
-
-
 /**
  * @details Trains a layer by looping through and training its cells
  * @param l A pointer to the layer that is to be training
@@ -60,7 +55,7 @@ void trainLayer(Layer *l){
     for (int imgCount=0; imgCount<MNIST_MAX_TRAINING_IMAGES; imgCount++){
         
         // display progress
-        displayLoadingProgressTraining(imgCount,3,5);
+        //displayLoadingProgressTraining(imgCount,3,5);
         
         // Reading next image and corresponding label
         MNIST_Image img = getImage(imageFile);
@@ -70,36 +65,37 @@ void trainLayer(Layer *l){
         Vector targetOutput;
         targetOutput = getTargetOutput(lbl);
         
-        displayImage(&img, 6,6);
+        //displayImage(&img, 6,6);
      
         // loop through all output cells for the given image
-        for (int i=0; i < NUMBER_OF_OUTPUT_CELLS; i++){
-            for (int i1=0; i1<NUMBER_OF_INPUT_CELLS; i1++){
-                (&l->cell[i])->input[i1] = (&img)->pixel[i1] ? 1 : 0;
+        for (int out=0; out < NUMBER_OF_OUTPUT_CELLS; out++){
+            Cell *out_cell = &l->cell[out];
+            for (int in=0; in < NUMBER_OF_INPUT_CELLS; in++){
+                out_cell->input[in] = ((&img)->pixel[in] ? 1 : 0);
             }
-            (&l->cell[i])->output=0;
+            out_cell->output=0;
 
-            for (int i2=0; i2<NUMBER_OF_INPUT_CELLS; i2++){
-                (&l->cell[i])->output += (&l->cell[i])->input[i2] * (&l->cell[i])->weight[i2];
+            for (int in2=0; in2<NUMBER_OF_INPUT_CELLS; in2++){
+                out_cell->output += ((&img)->pixel[in2] ? 1 : 0) * out_cell->weight[in2];
             }
 
-            (&l->cell[i])->output /= NUMBER_OF_INPUT_CELLS;             // normalize output (0-1)
+            out_cell->output /= NUMBER_OF_INPUT_CELLS;             // normalize output (0-1)
 
             // learning (by updating the weights)
-            double err1 = targetOutput.val[i] - (&l->cell[i])->output;
+            double err1 = targetOutput.val[out] - out_cell->output;
 
             double err = err1;
-            for (int i3=0; i3<NUMBER_OF_INPUT_CELLS; i3++){
-                (&l->cell[i])->weight[i3] += LEARNING_RATE * (&l->cell[i])->input[i3] * err;
+            for (int in3=0; in3<NUMBER_OF_INPUT_CELLS; in3++){
+                out_cell->weight[in3] += LEARNING_RATE * out_cell->input[in3] * err;
             }
         }
         
         int predictedNum = getLayerPrediction(l);
         if (predictedNum!=lbl) errCount++;
         
-        printf("\n      Prediction: %d   Actual: %d ",predictedNum, lbl);
+        //printf("\n      Prediction: %d   Actual: %d ",predictedNum, lbl);
 
-        displayProgress(imgCount, errCount, 3, 66);
+        //displayProgress(imgCount, errCount, 3, 66);
         
     }
     
@@ -135,7 +131,7 @@ void testLayer(Layer *l){
     for (int imgCount=0; imgCount<MNIST_MAX_TESTING_IMAGES; imgCount++){
         
         // display progress
-        displayLoadingProgressTesting(imgCount,5,5);
+       // displayLoadingProgressTesting(imgCount,5,5);
         
         // Reading next image and corresponding label
         MNIST_Image img = getImage(imageFile);
@@ -145,19 +141,39 @@ void testLayer(Layer *l){
         Vector targetOutput;
         targetOutput = getTargetOutput(lbl);
         
-        displayImage(&img, 8,6);
+        //displayImage(&img, 8,6);
         
         // loop through all output cells for the given image
         for (int i=0; i < NUMBER_OF_OUTPUT_CELLS; i++){
-            testCell(&l->cell[i], &img, targetOutput.val[i]);
+            for (int i1=0; i1<NUMBER_OF_INPUT_CELLS; i1++){
+                (&l->cell[i])->input[i1] = (&img)->pixel[i1] ? 1 : 0;
+            }
+            (&l->cell[i])->output=0;
+
+            for (int i2=0; i2<NUMBER_OF_INPUT_CELLS; i2++){
+                (&l->cell[i])->output += (&l->cell[i])->input[i2] * (&l->cell[i])->weight[i2];
+            }
+
+            (&l->cell[i])->output /= NUMBER_OF_INPUT_CELLS;             // normalize output (0-1)
         }
-        
-        int predictedNum = getLayerPrediction(l);
+
+        double maxOut = 0;
+        int maxInd = 0;
+
+        for (int i3=0; i3<NUMBER_OF_OUTPUT_CELLS; i3++){
+
+            if (l->cell[i3].output > maxOut){
+                maxOut = l->cell[i3].output;
+                maxInd = i3;
+            }
+        }
+
+        int predictedNum = maxInd;
         if (predictedNum!=lbl) errCount++;
         
-        printf("\n      Prediction: %d   Actual: %d ",predictedNum, lbl);
+        //printf("\n      Prediction: %d   Actual: %d ",predictedNum, lbl);
         
-        displayProgress(imgCount, errCount, 5, 66);
+        //displayProgress(imgCount, errCount, 5, 66);
         
     }
     
