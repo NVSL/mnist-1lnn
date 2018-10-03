@@ -102,7 +102,7 @@ FILE *openMNISTImageFile(char *fileName){
 
     MNIST_ImageFileHeader imageFileHeader;
     readImageFileHeader(imageFile, &imageFileHeader);
-    
+    printf("%d\n", imageFileHeader.maxImages);
     return imageFile;
 }
 
@@ -138,12 +138,13 @@ FILE *openMNISTLabelFile(char *fileName){
  */
 
 MNIST_Image getImage(FILE *imageFile){
-    
+    static int  count =0;
     MNIST_Image img;
     size_t result;
+    count++;
     result = fread(&img, sizeof(img), 1, imageFile);
     if (result!=1) {
-        printf("\nError when reading IMAGE file! Abort!\n");
+        printf("\nError when reading IMAGE file! Abort! %d\n", count);
         exit(1);
     }
     

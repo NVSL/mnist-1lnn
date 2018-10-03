@@ -93,9 +93,9 @@ void trainLayer(Layer *l){
         int predictedNum = getLayerPrediction(l);
         if (predictedNum!=lbl) errCount++;
         
-        //printf("\n      Prediction: %d   Actual: %d ",predictedNum, lbl);
+        printf("\n      Prediction: %d   Actual: %d ",predictedNum, lbl);
 
-        //displayProgress(imgCount, errCount, 3, 66);
+        displayProgress(imgCount, errCount, 3, 66);
         
     }
     
@@ -145,16 +145,17 @@ void testLayer(Layer *l){
         
         // loop through all output cells for the given image
         for (int i=0; i < NUMBER_OF_OUTPUT_CELLS; i++){
-            for (int i1=0; i1<NUMBER_OF_INPUT_CELLS; i1++){
-                (&l->cell[i])->input[i1] = (&img)->pixel[i1] ? 1 : 0;
+            Cell *out_cell = &l->cell[i];
+            for (int i1=0; i1 < NUMBER_OF_INPUT_CELLS; i1++){
+                out_cell->input[i1] = (&img)->pixel[i1] ? 1 : 0;
             }
-            (&l->cell[i])->output=0;
+            out_cell->output=0;
 
             for (int i2=0; i2<NUMBER_OF_INPUT_CELLS; i2++){
-                (&l->cell[i])->output += (&l->cell[i])->input[i2] * (&l->cell[i])->weight[i2];
+                out_cell->output += out_cell->input[i2] * out_cell->weight[i2];
             }
 
-            (&l->cell[i])->output /= NUMBER_OF_INPUT_CELLS;             // normalize output (0-1)
+            out_cell->output /= NUMBER_OF_INPUT_CELLS;             // normalize output (0-1)
         }
 
         double maxOut = 0;
@@ -171,9 +172,9 @@ void testLayer(Layer *l){
         int predictedNum = maxInd;
         if (predictedNum!=lbl) errCount++;
         
-        //printf("\n      Prediction: %d   Actual: %d ",predictedNum, lbl);
+        printf("\n      Prediction: %d   Actual: %d ",predictedNum, lbl);
         
-        //displayProgress(imgCount, errCount, 5, 66);
+        displayProgress(imgCount, errCount, 5, 66);
         
     }
     
@@ -204,7 +205,8 @@ int main(int argc, const char * argv[]) {
     Layer outputLayer;
     initLayer(&outputLayer);
     trainLayer(&outputLayer);
-    
+
+    printf("Done training\n");
     testLayer(&outputLayer);
 
     locateCursor(38, 5);

@@ -1,6 +1,12 @@
 # mnist-1lnn
 A simple 1-layer neural network to recognize handwritten single digit numbers from the MNIST image files.
 
+## Plan for CSE141 Coding Project  
+
+1.  Make sure code builds
+2.  Extend code to handle Emnist database.  It has more character classes (numbers + letters) and might be higher resolution.
+3.  Remove/simplify the ASCII-art output.  
+4.  Remove IO from core training loop.  The core loop should be just compute.
 
 ### Compile and run source code
 
