@@ -10,16 +10,16 @@
 #include <stdio.h>
 
 
-#define MNIST_TRAINING_SET_IMAGE_FILE_NAME "data/train-images-idx3-ubyte" ///< MNIST image training file in the data folder
-#define MNIST_TRAINING_SET_LABEL_FILE_NAME "data/train-labels-idx1-ubyte" ///< MNIST label training file in the data folder
+#define MNIST_TRAINING_SET_IMAGE_FILE_NAME "gzip/emnist-byclass-train-images-idx3-ubyte" ///< MNIST image training file in the data folder
+#define MNIST_TRAINING_SET_LABEL_FILE_NAME "gzip/emnist-byclass-train-labels-idx1-ubyte" ///< MNIST label training file in the data folder
 
-#define MNIST_TESTING_SET_IMAGE_FILE_NAME "data/t10k-images-idx3-ubyte"  ///< MNIST image testing file in the data folder
-#define MNIST_TESTING_SET_LABEL_FILE_NAME "data/t10k-labels-idx1-ubyte"  ///< MNIST label testing file in the data folder
+#define MNIST_TESTING_SET_IMAGE_FILE_NAME "gzip/emnist-byclass-test-images-idx3-ubyte"  ///< MNIST image testing file in the data folder
+#define MNIST_TESTING_SET_LABEL_FILE_NAME "gzip/emnist-byclass-test-labels-idx1-ubyte"  ///< MNIST label testing file in the data folder
 
 
 
-#define MNIST_MAX_TRAINING_IMAGES 60000                     ///< number of images+labels in the TRAIN file/s
-#define MNIST_MAX_TESTING_IMAGES 10000                      ///< number of images+labels in the TEST file/s
+#define MNIST_MAX_TRAINING_IMAGES 697932                     ///< number of images+labels in the TRAIN file/s
+#define MNIST_MAX_TESTING_IMAGES  116323                      ///< number of images+labels in the TEST file/s
 #define MNIST_IMG_WIDTH 28                                  ///< image width in pixel
 #define MNIST_IMG_HEIGHT 28                                 ///< image height in pixel
 

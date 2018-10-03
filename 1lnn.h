@@ -9,7 +9,7 @@
 #include <stdio.h>
 
 #define NUMBER_OF_INPUT_CELLS 784   ///< use 28*28 input cells (= number of pixels per MNIST image)
-#define NUMBER_OF_OUTPUT_CELLS 10   ///< use 10 output cells to model 10 digits (0-9)
+#define NUMBER_OF_OUTPUT_CELLS 62   ///< use 10 output cells to model 10 digits (0-9)
 
 #define LEARNING_RATE 0.05          ///< Incremental increase for changing connection weights
 

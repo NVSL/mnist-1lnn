@@ -133,6 +133,7 @@ void testLayer(Layer *l){
         // loop through all output cells for the given image
         for (int i=0; i < NUMBER_OF_OUTPUT_CELLS; i++){
             testCell(&l->cell[i], &img, targetOutput.val[i]);
+
         }
         
         int predictedNum = getLayerPrediction(l);
@@ -171,7 +172,8 @@ int main(int argc, const char * argv[]) {
     Layer outputLayer;
     initLayer(&outputLayer);
     trainLayer(&outputLayer);
-    
+
+    printf("Done training\n");
     testLayer(&outputLayer);
 
     locateCursor(38, 5);
