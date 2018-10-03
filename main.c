@@ -74,7 +74,24 @@ void trainLayer(Layer *l){
      
         // loop through all output cells for the given image
         for (int i=0; i < NUMBER_OF_OUTPUT_CELLS; i++){
-            trainCell(&l->cell[i], &img, targetOutput.val[i]);
+            for (int i1=0; i1<NUMBER_OF_INPUT_CELLS; i1++){
+                (&l->cell[i])->input[i1] = (&img)->pixel[i1] ? 1 : 0;
+            }
+            (&l->cell[i])->output=0;
+
+            for (int i2=0; i2<NUMBER_OF_INPUT_CELLS; i2++){
+                (&l->cell[i])->output += (&l->cell[i])->input[i2] * (&l->cell[i])->weight[i2];
+            }
+
+            (&l->cell[i])->output /= NUMBER_OF_INPUT_CELLS;             // normalize output (0-1)
+
+            // learning (by updating the weights)
+            double err1 = targetOutput.val[i] - (&l->cell[i])->output;
+
+            double err = err1;
+            for (int i3=0; i3<NUMBER_OF_INPUT_CELLS; i3++){
+                (&l->cell[i])->weight[i3] += LEARNING_RATE * (&l->cell[i])->input[i3] * err;
+            }
         }
         
         int predictedNum = getLayerPrediction(l);

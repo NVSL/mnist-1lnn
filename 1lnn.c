@@ -113,54 +113,6 @@ void calcCellOutput(Cell *c){
 }
 
 
-
-
-/**
- * @details Returns the difference between a target value and the cell's ouput
- */
-
-double getCellError(Cell *c, int target){
-
-    double err = target - c->output;
-
-    return err;
-}
-
-
-
-
-/**
- * @details Updates a cell's weights based on given error and LEARNING_RATE
- */
-
-void updateCellWeights(Cell *c, double err){
-    
-    for (int i=0; i<NUMBER_OF_INPUT_CELLS; i++){
-        c->weight[i] += LEARNING_RATE * c->input[i] * err;
-    }
-}
-
-
-
-
-/**
- * @details Performs the training algorithm:
- * feeding input, calculate output, calculate error, update weights)
- */
-
-void trainCell(Cell *c, MNIST_Image *img, int target){
-    
-    setCellInput(c, img);
-    calcCellOutput(c);
-    
-    // learning (by updating the weights)
-    double err = getCellError(c, target);
-    updateCellWeights(c, err);
-}
-
-
-
-
 /**
  * @details Performs the testing of the trained network
  * Same as training a cell, but without updating weights (learning)

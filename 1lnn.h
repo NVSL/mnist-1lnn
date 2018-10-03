@@ -107,42 +107,6 @@ void setCellInput(Cell *c, MNIST_Image *img);
 void calcCellOutput(Cell *c);
 
 
-
-
-/**
- * @brief Returns the difference between a target value and the cell's ouput
- * @param c The cell whose output is to be compared
- * @param target The desired value (= correct answer in supervised learning)
- */
-
-double getCellError(Cell *c, int target);
-
-
-
-
-/**
- * @brief Updates a cell's weights based on given error and LEARNING_RATE
- * @param c The cell whose weights are to be updated.
- * @param err The error (difference between desired output and actual output
- */
-
-void updateCellWeights(Cell *c, double err);
-
-
-
-
-/**
- * @brief Performs the training algorithm
- * @param c Pointer to the cell that is to be trained
- * @param img Pointer to the image that is to be processed
- * @param target Desired output value
- */
-
-void trainCell(Cell *c, MNIST_Image *img, int target);
-
-
-
-
 /**
  * @brief Performs the testing of the trained network
  * @param c Pointer to the cell that is to be trained
