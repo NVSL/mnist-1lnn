@@ -4,11 +4,10 @@ A simple 1-layer neural network to recognize handwritten single digit numbers fr
 ## Plan for CSE141 Coding Project  
 
 1.  Make sure code builds
-2.  Add some command line options to switch between mnist and emnist.
-3.  Make sure you parse the whole emnist database.
+2.  Extend code to handle Emnist database.  It has more character classes (numbers + letters) and might be higher resolution.
+3.  Remove/simplify the ASCII-art output.  
+4.  Remove IO from core training loop.  The core loop should be just compute.
 4.  Remove/simplify the ASCII-art output.  Stats are good.  Frequent updates and "images" are bad
-5.  Remove IO from core training loop.  The core loop should be just compute.
-6.  Make it use floats instead of bytes.  US the gray scale information in the images. 2
 
 ### Compile and run source code
 
