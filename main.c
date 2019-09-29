@@ -52,15 +52,18 @@ void trainLayer(Layer *l){
     
     
     // screen output for monitoring progress
-    displayImageFrame(5,5);
+    //displayImageFrame(5,5);
 
+    fprintf(stderr, "Starting training");
     int errCount = 0;
     
     // Loop through all images in the file
     for (int imgCount=0; imgCount<MNIST_MAX_TRAINING_IMAGES; imgCount++){
-        
+	    if (imgCount % 1000 == 0) {
+		    fprintf(stderr, ".");
+	    }
         // display progress
-        displayLoadingProgressTraining(imgCount,3,5);
+	//displayLoadingProgressTraining(imgCount,3,5);
         
         // Reading next image and corresponding label
         MNIST_Image img = getImage(imageFile);
@@ -70,7 +73,7 @@ void trainLayer(Layer *l){
         Vector targetOutput;
         targetOutput = getTargetOutput(lbl);
         
-        displayImage(&img, 6,6);
+        //displayImage(&img, 6,6);
      
         // loop through all output cells for the given image
         for (int i=0; i < NUMBER_OF_OUTPUT_CELLS; i++){
@@ -80,12 +83,14 @@ void trainLayer(Layer *l){
         int predictedNum = getLayerPrediction(l);
         if (predictedNum!=lbl) errCount++;
         
-        printf("\n      Prediction: %d   Actual: %d ",predictedNum, lbl);
+        //printf("\n      Prediction: %d   Actual: %d ",predictedNum, lbl);
 
-        displayProgress(imgCount, errCount, 3, 66);
+        //displayProgress(imgCount, errCount, 3, 66);
         
     }
-    
+
+    fprintf(stderr, "done\n");
+
     // Close files
     fclose(imageFile);
     fclose(labelFile);
@@ -110,15 +115,17 @@ void testLayer(Layer *l){
     
     
     // screen output for monitoring progress
-    displayImageFrame(7,5);
-    
+    //displayImageFrame(7,5);
+    fprintf(stderr, "Starting classifier");
     int errCount = 0;
     
     // Loop through all images in the file
     for (int imgCount=0; imgCount<MNIST_MAX_TESTING_IMAGES; imgCount++){
-        
+	    if (imgCount % 1000 == 0) {
+		    fprintf(stderr, ".");
+	    }        
         // display progress
-        displayLoadingProgressTesting(imgCount,5,5);
+	    //displayLoadingProgressTesting(imgCount,5,5);
         
         // Reading next image and corresponding label
         MNIST_Image img = getImage(imageFile);
@@ -128,7 +135,7 @@ void testLayer(Layer *l){
         Vector targetOutput;
         targetOutput = getTargetOutput(lbl);
         
-        displayImage(&img, 8,6);
+        //displayImage(&img, 8,6);
         
         // loop through all output cells for the given image
         for (int i=0; i < NUMBER_OF_OUTPUT_CELLS; i++){
@@ -139,12 +146,12 @@ void testLayer(Layer *l){
         int predictedNum = getLayerPrediction(l);
         if (predictedNum!=lbl) errCount++;
         
-        printf("\n      Prediction: %d   Actual: %d ",predictedNum, lbl);
+        //printf("\n      Prediction: %d   Actual: %d ",predictedNum, lbl);
         
-        displayProgress(imgCount, errCount, 5, 66);
+        //displayProgress(imgCount, errCount, 5, 66);
         
     }
-    
+    fprintf(stderr, "done\n");    
     // Close files
     fclose(imageFile);
     fclose(labelFile);
@@ -165,23 +172,23 @@ int main(int argc, const char * argv[]) {
     time_t startTime = time(NULL);
     
     // clear screen of terminal window
-    clearScreen();
-    printf("    MNIST-1LNN: a simple 1-layer neural network processing the MNIST handwriting images\n");
+    //clearScreen();
+    //printf("    MNIST-1LNN: a simple 1-layer neural network processing the MNIST handwriting images\n");
     
     // initialize all connection weights to random values between 0 and 1
     Layer outputLayer;
     initLayer(&outputLayer);
     trainLayer(&outputLayer);
-
-    printf("Done training\n");
+    
+    //printf("Done training\n");
     testLayer(&outputLayer);
 
-    locateCursor(38, 5);
+    //locateCursor(38, 5);
     
     // Calculate and print the program's total execution time
     time_t endTime = time(NULL);
     double executionTime = difftime(endTime, startTime);
-    printf("\n    DONE! Total execution time: %.1f sec\n\n",executionTime);
+    printf("DONE! Total execution time: %.1f sec\n\n",executionTime);
     
     return 0;
 }

@@ -7,8 +7,9 @@ main:
 
 
 gzip.zip:
-	wget http://www.itl.nist.gov/iaui/vip/cs_links/EMNIST/gzip.zip -O $@
+	curl -L -o $@ http://www.itl.nist.gov/iaui/vip/cs_links/EMNIST/gzip.zip
 
 $(INPUTS): gzip.zip
 	unzip -o $<
 	gunzip -f gzip/*.gz
+	touch $@
